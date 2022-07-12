@@ -10,9 +10,10 @@ type
   TForm1 = class(TForm)
     btnTeste1: TButton;
     btnTeste2: TButton;
-    btnTeste3: TButton;
     edtFibonnaci: TEdit;
+    btnTeste3: TButton;
     btnTeste5: TButton;
+    edtTexto: TEdit;
     procedure btnTeste1Click(Sender: TObject);
     procedure btnTeste2Click(Sender: TObject);
     procedure btnTeste3Click(Sender: TObject);
@@ -57,7 +58,7 @@ end;
 //Teste2------------------
 procedure TForm1.btnTeste2Click(Sender: TObject);
 begin
-  fibonacci( StrToInt( edtFibonnaci.Text ) );
+   fibonacci( StrToInt( edtFibonnaci.Text ) );
 end;
 
 procedure TForm1.fibonacci(valor: Integer);
@@ -95,7 +96,7 @@ end;
 //Teste3------------------
 procedure TForm1.btnTeste3Click(Sender: TObject);
 var index, valor, aux, num1, num2 : Integer;
-begin
+begin//Os testes vão ser rodados conforme o botão Testes3 for clicado.
 //A
   valor := 10;
   aux   := 0;
@@ -140,24 +141,33 @@ begin
     num1 := aux ;
     ShowMessage( IntToStr( aux ) );
     index := index + 1;
-  end;
+  end
 //F
 //A lógica da letra F são todos os números que começam com D:
 //dois, dez, doze, dezesseis, dezessete, dezoito, dezenove e duzentos.
 end;
-//Teste5-----------------------
 procedure TForm1.btnTeste5Click(Sender: TObject);
 begin
-  ShowMessage( 'O nome da String é TESTE' );
-  ShowMessage( Substituir( 'Teste' ) );
+  if ( edtTexto.Text = '' ) then
+    ShowMessage( 'Favor digitar uma palavra no campo ao lado do botão Teste5!' )
+  else
+    ShowMessage( Substituir( edtTexto.Text ) );
 end;
 
+//Teste5-----------------------
 function TForm1.Substituir( str: String ): String;
 var index, i: Integer;
     valor   : String;
+    list    : TStringList;
 begin
-  for index := Length( str ) downto 1 do
-    valor := valor + Copy( str, i, 1 );
+  list := TStringList.Create;
+  //Pega o tamanho da palvra.
+  for index := 0 to Length( Str ) do
+    list.Add( Copy( Str, index+1, 1 ) );
+  //Inverte a palavra.
+  for index := list.Count-1 downto 0  do
+    valor := valor + list[ index ];
   Result := valor;
+  FreeAndNil( list );
 end;
 end.
